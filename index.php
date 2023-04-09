@@ -96,6 +96,7 @@ try {
     // Входные данные для поиска (в класе StaffModelSearch нужно настроить метод setRules определив групы поиска и правила пример смотреть в классе ModelSearchBase)
 
     // LIST
+    /*
     $params = [
         'userId' => 100, // GROUP_MUST -> RULE_EQUAL
         'workPositionId' => 25, // GROUP_FILTER -> RULE_EQUAL
@@ -112,36 +113,32 @@ try {
     //$staffModelSearch->enableFixLimitResult(50);
     $result = $staffModelSearch->searchList($params);
 
-
-    // MAP
-
-
     echo "<pre>";
     print_r($result);
     exit;
 
+    */
 
+    // MAP
+    /*
+    $params = [
+        'userId' => 100, // GROUP_MUST -> RULE_EQUAL
+        'workPositionId' => 25, // GROUP_FILTER -> RULE_EQUAL
+        'userEmail' => 'stepan21@gmail.com', // GROUP_SHOULD -> RULE_LIKE
+        'userName' => 'Stepan', // GROUP_SHOULD -> RULE_LIKE
+        'workSkillsId' => [36, 40], // GROUP_SHOULD -> RULE_IN
+        'userAge' => ['min' => 18, 'max' => 65], // GROUP_FILTER -> RULE_RANGE
+        'workSalary' => ['min' => 500, 'max' => 5000], // GROUP_FILTER -> RULE_RANGE
+        'location' => ['lat' => 47.454589, 'lon' => 32.915673, 'distance' => 5000], // GROUP_LOCATION -> RULE_GEO
+    ];
 
+    $result = $staffModelSearch->searchMap($params);
+
+    echo "<pre>";
+    print_r($result);
+    exit;
+    */
 
 } catch (\Exception $e) {
     echo $e->getMessage();
 }
-
-
-//use App\Search;
-//use Belyys7\ElasticsearchItsEasy\forms\FilterForm;
-//use Belyys7\ElasticsearchItsEasy\ModelSearch;
-
-
-//$modelSearch = new ModelSearch('es01', 9200, 'model_search');
-//$data = $modelSearch->searchMap($_GET);
-//
-//print_r($data);
-//exit;
-
-//$form = new FilterForm(FilterForm::SCENARIO_SEARCH_MAP);
-//$form->load($_GET);
-//
-//if ($form->validate()) {
-//
-//}

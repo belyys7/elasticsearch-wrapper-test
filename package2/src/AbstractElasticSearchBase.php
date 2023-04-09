@@ -9,6 +9,8 @@ abstract class AbstractElasticSearchBase
 {
     const TYPE_SEARCH = '_doc';
 
+    const PAGE_CONTENT_BATCH = 1000;
+
     protected $client;
 
     public $indexSearch;

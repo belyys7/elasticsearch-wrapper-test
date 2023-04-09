@@ -116,7 +116,7 @@ class ModelSearchBase extends AbstractElasticSearchBase
      * @return array
      * @throws Exception
      */
-    public function searchList($params)
+    public function searchList($params = [])
     {
         try {
 
@@ -163,9 +163,56 @@ class ModelSearchBase extends AbstractElasticSearchBase
         }
     }
 
-    public function searchMap()
+    /**
+     * @param $params
+     * @return array
+     * @throws Exception
+     */
+    public function searchMap($params = [])
     {
+        try {
 
+            if (!$this->client->indices()->exists(['index' => $this->indexSearch])) {
+                throw new Exception('Not found index - ' . $this->indexSearch);
+            }
+
+            $conditions = $this->prepareConditions($params);
+            $sort = $this->prepareSort();
+
+            $allElasticsearchHits = [];
+
+            $page = 0;
+
+            while (true) {
+
+                $paramsSearch = [
+                    'index' => $this->indexSearch,
+                    'type' => self::TYPE_SEARCH,
+                    'from' => $page * self::PAGE_CONTENT_BATCH,
+                    'size' => self::PAGE_CONTENT_BATCH,
+                    'body'  => ['sort' => $sort],
+                ];
+
+                if ($conditions['isChanged']) {
+                    $paramsSearch['body']['query'] = ['bool' => $conditions['query']];
+                }
+
+                $elasticResult = $this->client->search($paramsSearch);
+                $preparedResult = $this->prepareResult($elasticResult);
+
+                if ($preparedResult) {
+                    $allElasticsearchHits = array_merge($allElasticsearchHits, $preparedResult);
+                    $page++;
+                } else {
+                    break 1;
+                }
+            }
+
+            return $allElasticsearchHits;
+
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     /**
