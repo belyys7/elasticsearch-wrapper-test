@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Belyys72\ElasticsearchItsEasy\ModelSearchBase;
+use Belyys7\ElasticsearchItsEasy\ModelSearchBase;
 
 class StaffModelSearch extends ModelSearchBase
 {

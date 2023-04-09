@@ -96,16 +96,15 @@ try {
     // Входные данные для поиска (в класе StaffModelSearch нужно настроить метод setRules определив групы поиска и правила пример смотреть в классе ModelSearchBase)
 
     // LIST
-    /*
     $params = [
-        'userId' => 100, // GROUP_MUST -> RULE_EQUAL
-        'workPositionId' => 25, // GROUP_FILTER -> RULE_EQUAL
-        'userEmail' => 'stepan21@gmail.com', // GROUP_SHOULD -> RULE_LIKE
-        'userName' => 'Stepan', // GROUP_SHOULD -> RULE_LIKE
-        'workSkillsId' => [36, 40], // GROUP_SHOULD -> RULE_IN
-        'userAge' => ['min' => 18, 'max' => 65], // GROUP_FILTER -> RULE_RANGE
-        'workSalary' => ['min' => 500, 'max' => 5000], // GROUP_FILTER -> RULE_RANGE
-        'location' => ['lat' => 47.454589, 'lon' => 32.915673, 'distance' => 5000], // GROUP_LOCATION -> RULE_GEO
+//        'userId' => 100, // GROUP_MUST -> RULE_EQUAL
+//        'workPositionId' => 25, // GROUP_FILTER -> RULE_EQUAL
+//        'userEmail' => 'stepan21@gmail.com', // GROUP_SHOULD -> RULE_LIKE
+//        'userName' => 'Stepan', // GROUP_SHOULD -> RULE_LIKE
+//        'workSkillsId' => [36, 40], // GROUP_SHOULD -> RULE_IN
+//        'userAge' => ['min' => 18, 'max' => 65], // GROUP_FILTER -> RULE_RANGE
+//        'workSalary' => ['min' => 500, 'max' => 5000], // GROUP_FILTER -> RULE_RANGE
+        'location' => ['lat' => 47.454589, 'lon' => 32.915673, 'distance' => 50000], // GROUP_LOCATION -> RULE_GEO
         'page' => 1, // Default field
         'limit' => 20, // Default field
     ];
@@ -117,10 +116,10 @@ try {
     print_r($result);
     exit;
 
-    */
 
-    // MAP
+
     /*
+    // MAP
     $params = [
         'userId' => 100, // GROUP_MUST -> RULE_EQUAL
         'workPositionId' => 25, // GROUP_FILTER -> RULE_EQUAL

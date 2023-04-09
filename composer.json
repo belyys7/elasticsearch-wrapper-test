@@ -2,12 +2,11 @@
   "minimum-stability": "stable",
   "autoload": {
     "psr-4": {
-      "App\\": "app/",
-      "Belyys7\\ElasticsearchItsEasy\\": "package/src/",
-      "Belyys72\\ElasticsearchItsEasy\\": "package2/src/"
+      "App\\": "app/"
     }
   },
   "require": {
-    "elasticsearch/elasticsearch": "7.9.0"
+    "elasticsearch/elasticsearch": "7.9.0",
+    "belyys7/elasticsearch-its-easy": "1.0.0"
   }
 }
