@@ -13,7 +13,8 @@ $data = [
             'id' => 100,
             'email' => 'stepan21@gmail.com',
             'name' => 'Stepan',
-            'age' => 21
+            'age' => 21,
+            'birthday' => '2001-06-15',
         ],
         'work' => [
             'position' => [
@@ -45,8 +46,9 @@ $data = [
         'user' => [
             'id' => 101,
             'email' => 'luidji@gmail.com',
-            'name' => 'Stepan',
-            'age' => 29
+            'name' => 'Voland',
+            'age' => 29,
+            'birthday' => '1999-03-20',
         ],
         'work' => [
             'position' => [
@@ -82,7 +84,7 @@ $data = [
 
 try {
 
-    $staffModelSearch = new StaffModelSearch('es01', 9200, 'staff_search');
+    $staffModelSearch = new StaffModelSearch('es01', '9200', 'staff_search');
 
 //    if ($data) {
 //        $staffModelSearch->reCreateIndex();
@@ -90,10 +92,9 @@ try {
 //            $staffModelSearch->addDocument($item, 'user.id', $item['user']['id']);
 //        }
 //    }
-//
-//    sleep(3);
 
     // Входные данные для поиска (в класе StaffModelSearch нужно настроить метод setRules определив групы поиска и правила пример смотреть в классе ModelSearchBase)
+
 
     // LIST
     $params = [
@@ -102,20 +103,47 @@ try {
 //        'userEmail' => 'stepan21@gmail.com', // GROUP_SHOULD -> RULE_LIKE
 //        'userName' => 'Stepan', // GROUP_SHOULD -> RULE_LIKE
 //        'workSkillsId' => [36, 40], // GROUP_SHOULD -> RULE_IN
-//        'userAge' => ['min' => 18, 'max' => 65], // GROUP_FILTER -> RULE_RANGE
+//        'userAge' => ['min' => 22, 'max' => 65], // GROUP_FILTER -> RULE_RANGE
 //        'workSalary' => ['min' => 500, 'max' => 5000], // GROUP_FILTER -> RULE_RANGE
-        'location' => ['lat' => 47.454589, 'lon' => 32.915673, 'distance' => 50000], // GROUP_LOCATION -> RULE_GEO
+        // GROUP_LOCATION -> RULE_GEO
+        'location' => [
+            'point' => [
+                'lat' => 48.454589,
+                'lon' => 33.915673,
+                'distance' => 100000
+            ],
+            'rectangle' => [
+                'topLeftLat' => 55.710929,
+                'topLeftLng' => 14.090451,
+                'bottomRightLat' => 41.830140,
+                'bottomRightLng' => 41.802791
+            ],
+        ],
         'page' => 1, // Default field
         'limit' => 20, // Default field
     ];
 
     //$staffModelSearch->enableFixLimitResult(50);
+
+    $overWriteRules = [
+        'must' => [
+            [
+                'term' => [
+                    'user.name.keyword' => 'Stepan',
+                ],
+            ],
+            //...
+        ],
+        //...
+    ];
+
+    $staffModelSearch->setOverWriteRules($overWriteRules);
+
     $result = $staffModelSearch->searchList($params);
 
     echo "<pre>";
     print_r($result);
     exit;
-
 
 
     /*
@@ -126,9 +154,24 @@ try {
         'userEmail' => 'stepan21@gmail.com', // GROUP_SHOULD -> RULE_LIKE
         'userName' => 'Stepan', // GROUP_SHOULD -> RULE_LIKE
         'workSkillsId' => [36, 40], // GROUP_SHOULD -> RULE_IN
-        'userAge' => ['min' => 18, 'max' => 65], // GROUP_FILTER -> RULE_RANGE
-        'workSalary' => ['min' => 500, 'max' => 5000], // GROUP_FILTER -> RULE_RANGE
-        'location' => ['lat' => 47.454589, 'lon' => 32.915673, 'distance' => 5000], // GROUP_LOCATION -> RULE_GEO
+        'userAge' => ['min' => 18, 'max' => 65], // GROUP_FILTER -> RULE_RANGE_NUMBER
+        'workSalary' => ['min' => 500, 'max' => 5000], // GROUP_FILTER -> RULE_RANGE_NUMBER
+        'birthday' => ['from' => '1990-01-01', 'to' => '2025-12-31'], // GROUP_FILTER -> RULE_RANGE_DATE
+        'location' => [
+            'point' => [
+                'lat' => 48.454589,
+                'lon' => 33.915673,
+                'distance' => 100000
+            ],
+            'rectangle' => [
+                'topLeftLat' => 55.710929,
+                'topLeftLng' => 14.090451,
+                'bottomRightLat' => 41.830140,
+                'bottomRightLng' => 41.802791
+            ],
+            'clustering' => true,
+            'zoom' => 1,
+        ],
     ];
 
     $result = $staffModelSearch->searchMap($params);

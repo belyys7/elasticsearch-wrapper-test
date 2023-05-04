@@ -2,11 +2,13 @@
   "minimum-stability": "stable",
   "autoload": {
     "psr-4": {
-      "App\\": "app/"
+      "App\\": "app/",
+      "Belyys72\\ElasticsearchItsEasy\\": "package2/src/"
     }
   },
   "require": {
     "elasticsearch/elasticsearch": "7.9.0",
-    "belyys7/elasticsearch-its-easy": "1.0.0"
+    "belyys7/elasticsearch-its-easy": "1.0.0",
+    "saikiran/geohash": "1.0.1"
   }
 }

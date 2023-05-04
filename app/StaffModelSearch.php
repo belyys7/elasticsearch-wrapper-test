@@ -2,19 +2,14 @@
 
 namespace App;
 
-use Belyys7\ElasticsearchItsEasy\ModelSearchBase;
+use Belyys72\ElasticsearchItsEasy\ModelSearchBase;
 
 class StaffModelSearch extends ModelSearchBase
 {
-    public function __construct($ip, $port, $indexSearch)
-    {
-        parent::__construct($ip, $port, $indexSearch);
-    }
-
     /**
      * @return void
      */
-    public function setRules()
+    public function setRules() : void
     {
         $this->rules = [
             self::GROUP_MUST => [
@@ -35,9 +30,12 @@ class StaffModelSearch extends ModelSearchBase
                 self::RULE_EQUAL => [
                     'workPositionId' => 'work.position.id'
                 ],
-                self::RULE_RANGE => [
+                self::RULE_RANGE_NUMBER => [
                     'userAge' => 'user.age',
                     'workSalary' => 'work.salary',
+                ],
+                self::RULE_RANGE_DATE => [
+                    'birthday' => 'user.birthday',
                 ],
             ],
             self::GROUP_LOCATION => [
@@ -49,7 +47,7 @@ class StaffModelSearch extends ModelSearchBase
     /**
      * @return void
      */
-    public function setSort()
+    public function setSort() : void
     {
         $this->sort = [
             'user.id' => self::SORT_DESC,
